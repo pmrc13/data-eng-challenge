@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="Gradle 1" modules="data-eng-challenge.bus-streaming-app.main,data-eng-challenge.bus-streaming-app.test,data-eng-challenge.kafka-producer.main,data-eng-challenge.kafka-producer.test,data-eng-challenge.main,data-eng-challenge.test">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <parameters>
+        <parameter value="-target:jvm-11" />
+      </parameters>
+    </profile>
+  </component>
+</project>

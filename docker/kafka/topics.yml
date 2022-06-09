@@ -1,0 +1,17 @@
+test:
+  partitions: 1
+  replication: 1
+  config:
+    min.insync.replicas: 1
+
+source:
+  partitions: 1
+  replication: 1
+  config:
+    min.insync.replicas: 1
+
+sink:
+  partitions: 1
+  replication: 1
+  config:
+    min.insync.replicas: 1

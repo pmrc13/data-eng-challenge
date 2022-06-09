@@ -1,0 +1,57 @@
+apply plugin: 'scala'
+apply plugin: 'java-library'
+apply plugin: 'application'
+apply plugin: "cz.alenkacz.gradle.scalafmt"
+
+group 'org.example'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    scalaMajorVersion = '2.12'
+    scalaMinorVersion = '12'
+    scalaVersion = "${scalaMajorVersion}.${scalaMinorVersion}"
+    flinkVersion = "1.12.7"
+    circeVersion = "0.12.2"
+}
+
+dependencies {
+    implementation "org.apache.flink:flink-scala_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.flink:flink-streaming-scala_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.flink:flink-connector-kafka_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.flink:flink-clients_${scalaMajorVersion}:${flinkVersion}"
+
+    implementation "io.circe:circe-parser_${scalaMajorVersion}:${circeVersion}"
+    implementation "io.circe:circe-core_${scalaMajorVersion}:${circeVersion}"
+    implementation "io.circe:circe-generic_${scalaMajorVersion}:${circeVersion}"
+    implementation "io.circe:circe-generic-extras_${scalaMajorVersion}:${circeVersion}"
+
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.25'
+    implementation 'log4j:log4j:1.2.17'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.7.1"
+    testImplementation "org.scalatest:scalatest_${scalaMajorVersion}:${scalaTestVersion}"
+    testImplementation "org.apache.flink:flink-test-utils_${scalaMajorVersion}:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-runtime_${scalaMajorVersion}:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-streaming-scala_${scalaMajorVersion}:${flinkVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task scalaTest(dependsOn: ['testClasses'], type: JavaExec) {
+    main = 'org.scalatest.tools.Runner'
+    args = ['-R', 'build/classes/scala/test', '-o', '-w', 'org.busstreamingapp']
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+test.dependsOn scalaTest
+
+mainClassName = "org.busstreamingapp.BusSpeedMonitoringStream"

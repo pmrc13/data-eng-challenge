@@ -1,0 +1,35 @@
+apply plugin: 'scala'
+apply plugin: 'java-library'
+apply plugin: 'application'
+apply plugin: "cz.alenkacz.gradle.scalafmt"
+
+group 'org.kafkaproducer'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    scalaMajorVersion = '2.12'
+    scalaMinorVersion = '12'
+    scalaVersion = "${scalaMajorVersion}.${scalaMinorVersion}"
+    kafkaVersion = "2.4.1"
+}
+
+dependencies {
+    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    implementation "org.apache.kafka:kafka-clients:${kafkaVersion}"
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.25'
+    implementation 'log4j:log4j:1.2.17'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+mainClassName = "org.kafkaproducer.KafkaProducerApp"

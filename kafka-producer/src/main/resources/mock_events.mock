@@ -1,0 +1,4 @@
+1352160008000000,line_id,0,journey_pattern_id,2012-11-05,vehicle_journey_id,D2,0,-7.257329,53.287521,0.0,block_id,6789,stop_id,0
+1352160008000000,line_id,0,journey_pattern_id,2012-11-05,vehicle_journey_id,D2,0,-7.0,53.287000,0.0,block_id,12345,stop_id,0
+1352160009000000,line_id,0,journey_pattern_id,2012-11-05,vehicle_journey_id,D2,0,-7.257329,53.287531,0.0,block_id,6789,stop_id,0
+1352160009000000,line_id,0,journey_pattern_id,2012-11-05,vehicle_journey_id,D2,0,-7.0,53.287250,0.0,block_id,12345,stop_id,0

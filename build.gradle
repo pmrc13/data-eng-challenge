@@ -1,0 +1,51 @@
+plugins {
+    id 'scala'
+    id 'java-library'
+    id 'application'
+    id "cz.alenkacz.gradle.scalafmt" version "1.16.2"
+}
+
+ext {
+    scalaMajorVersion = "2.12"
+    flinkVersion = "1.12.7"
+    mimirVersion = "1.1.10"
+    flinkEngine = "2.0.1"
+    scalaTestVersion = "3.1.2"
+    kafkaVersion = "2.4.1"
+    log4jVersion = "[2.17.1,)"
+    mySQLConnectorJavaVersion = "8.0.13"
+    hikariCPVersion = "3.4.2"
+    cucumberVersion = "6.10.4"
+    junitInterfaceVersion = "0.11"
+}
+
+dependencies {
+    compileOnly "org.apache.flink:flink-scala_${scalaMajorVersion}:${flinkVersion}"
+    compileOnly "org.apache.flink:flink-streaming-scala_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.flink:flink-s3-fs-presto:${flinkVersion}"
+    implementation "org.apache.flink:flink-clients_${scalaMajorVersion}:${flinkVersion}"
+    implementation "org.apache.kafka:kafka-streams-scala_${scalaMajorVersion}:${kafkaVersion}"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:${log4jVersion}"
+
+    testImplementation "org.scalatest:scalatest_${scalaMajorVersion}:${scalaTestVersion}"
+    testImplementation "org.apache.flink:flink-test-utils_${scalaMajorVersion}:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-runtime_${scalaMajorVersion}:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-streaming-scala_${scalaMajorVersion}:${flinkVersion}"
+    testImplementation "org.apache.kafka:kafka-streams-test-utils:${kafkaVersion}"
+    testImplementation "org.apache.kafka:kafka-streams:${kafkaVersion}"
+    testImplementation "org.apache.kafka:kafka-streams:${kafkaVersion}:test"
+    testImplementation "org.apache.kafka:kafka-clients:${kafkaVersion}"
+    testImplementation "org.apache.kafka:kafka-clients:${kafkaVersion}:test"
+    testImplementation "org.apache.kafka:kafka_${scalaMajorVersion}:${kafkaVersion}"
+    testImplementation "org.apache.kafka:kafka_${scalaMajorVersion}:${kafkaVersion}:test"
+    testImplementation "mysql:mysql-connector-java:${mySQLConnectorJavaVersion}"
+    testImplementation "com.zaxxer:HikariCP:${hikariCPVersion}"
+    testImplementation "io.cucumber:cucumber-scala_${scalaMajorVersion}:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testImplementation "com.novocode:junit-interface:${junitInterfaceVersion}"
+}
+
+repositories {
+    mavenCentral()
+}

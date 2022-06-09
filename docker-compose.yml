@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.3.0
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:5.3.0
+    ports:
+      - "49092:49092"
+    restart: on-failure
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 16000
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:39092,PLAINTEXT_OUT_OF_DOCKER://localhost:49092,PLAINTEXT_INTRA_DOCKER://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_OUT_OF_DOCKER:PLAINTEXT,PLAINTEXT_INTRA_DOCKER:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka_topics:
+    image: skyuk/kafka-configurator
+    depends_on:
+      - kafka
+    command: -f /topics/topics.yml --bootstrap-servers kafka:9092
+    volumes:
+      - ./docker/kafka/:/topics
+    restart: on-failure
+
+  dev:
+    build:
+      context: .
+      target: base
+    image: data-eng-challeng-dev
+
+  integration-tests:
+    image: data-eng-challeng-dev
+    command: ./gradlew --build-cache clean :bus-streaming-app:compileTestScala :bus-streaming-app:scalaTest
+
+  static-analysis:
+    image: data-eng-challeng-dev
+    command: ./gradlew --build-cache clean checkScalafmtAll
+
+  kafka-producer:
+    image: data-eng-challeng-dev
+    depends_on:
+      - kafka_topics
+    command: gradle --no-daemon :kafka-producer:run
+
+  bus-streaming-app:
+    image: data-eng-challeng-dev
+    depends_on:
+      - kafka_topics
+    command: ./gradlew --no-daemon :bus-streaming-app:run

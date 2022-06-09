@@ -1,0 +1,4 @@
+rootProject.name = 'data-eng-challenge'
+include 'bus-streaming-app'
+include 'kafka-producer'
+
