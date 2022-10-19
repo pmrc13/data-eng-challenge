@@ -134,7 +134,10 @@ The Docker configuration is not optimized. The version of Gradle that runs insid
 the behaviour of the applications.
 
 # Improvements
+- Improve the kafka-producer app as it is very simple. Also, explore other technologies (e.g., Akka Streams)
 - Create more tests: unit and integration tests
+- Improve the quality of the Scala code itself
+- Simplify the logic as the current logic based on timers may be bit hard to follow
 - Allow for greater customization around configurations
 - Optimize the Docker configuration, especially regarding Gradle
 - Implement a pre-processing stage of incoming events that includes dealing with the problems mentioned in this [article](https://medium.com/tblx-insider/cleaning-the-dublin-buses-dataset-a-tutorial-2783ba2edab4)
