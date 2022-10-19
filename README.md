@@ -1,6 +1,6 @@
 # Data Engineering Challenge
 
-This repository contains a proposed solution to the Data Engineering Challenge.
+This repository contains a proposed solution to the [Data Engineering Challenge](./Data-Engineering-Challenge.md).
 The goal of this challenge is to build a solution that processes the Dublin Bus dataset and emits events within certain 
 conditions.
 
